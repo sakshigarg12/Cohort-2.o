@@ -1,3 +1,17 @@
+GET : Purpose is to retrieve or fetch  data from the server
+data location : sent in the url query string(eg. /search?name=sakshi)
+visible : anyone can see it in the browser's url
+cacheable : browers often cache GET requests
+safe and idempotent : doesnot change server data just reads
+limitations: url length is limites(~2000 characters)
+
+POST : purpose is to sent data to server, usually to create or update something
+data location : sent in the body of the request(not in URL)
+hidden : not visible in URL(but can still be seen with dev tools)
+not cacheable : browsers donot cache POST requests
+used for : login forms, saving data, uploading files
+No strict size limit : can send much larger data than GET
+
 Middlewares -> middleware is simply a function that sits between the request and response 
 
 app.use([path], middlewareFunction)
