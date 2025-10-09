@@ -1,0 +1,92 @@
+Zod is a TypeScript-first validation library for JavaScript/Node.js —you use it to define schemas that describe what your data should look like,
+and then validate actual data against them.
+
+In simpler words:
+
+Zod makes sure the data you receive (from frontend, API, database, etc.) is in the right format, type, and structure.
+
+const express = require('express');
+const { z } = require('zod');
+
+const app = express();
+app.use(express.json()); // parse JSON body
+
+//-----------------------------------
+// 1️⃣ Reusable Middleware
+//-----------------------------------
+function validate(schema) {
+  return (req, res, next) => {
+    const result = schema.safeParse(req.body);
+    if (!result.success) {
+      return res.status(400).json({
+        success: false,
+        errors: result.error.errors,
+      });
+    }
+    req.validData = result.data; // store validated data
+    next();
+  };
+}
+
+//-----------------------------------
+// 2️⃣ Schemas for each route
+//-----------------------------------
+
+// register: name, email, password
+const registerSchema = z.object({
+  name: z.string().min(3, "Name must be at least 3 chars"),
+  email: z.string().email("Invalid email format"),
+  password: z.string().min(8, "Password must be at least 8 chars"),
+});
+
+// login: email, password
+const loginSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8),
+});
+
+// update: optional fields
+const updateSchema = z.object({
+  name: z.string().min(3).optional(),
+  age: z.number().min(1).max(120).optional(),
+});
+
+//-----------------------------------
+// 3️⃣ Routes
+//-----------------------------------
+
+// REGISTER
+app.post('/register', validate(registerSchema), (req, res) => {
+  const user = req.validData; // safe data
+  res.json({
+    success: true,
+    message: 'User registered successfully',
+    user,
+  });
+});
+
+// LOGIN
+app.post('/login', validate(loginSchema), (req, res) => {
+  const { email } = req.validData;
+  res.json({
+    success: true,
+    message: `Welcome back, ${email}!`,
+  });
+});
+
+// UPDATE
+app.put('/update', validate(updateSchema), (req, res) => {
+  const updates = req.validData;
+  res.json({
+    success: true,
+    message: 'Profile updated',
+    updates,
+  });
+});
+
+//-----------------------------------
+// 4️⃣ Start server
+//-----------------------------------
+app.listen(3000, () => {
+  console.log("🚀 Server running on port 3000");
+});
