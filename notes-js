@@ -1,0 +1,30 @@
+SSD - this is the harddrive of our system where our files, documents, videos, pictures store
+RAM - random access memory the programs that going to run like we want to launch meeting then we have to run zoom call 
+
+Compiled language- write the code then convert the whole code (into 0s,1s) then compile the code and if error occurs in any of the line whole code stops
+eg. java, c++, rust
+Interpreted language - wrte the code then code runs line by line if any error occurs in any of the line whole code doesnot stop error only shows there or we can say can run partially if error comes later
+eg. javascript, python
+
+static language = variable type fix at compile time like java, c++ 
+- Compiler pehle hi check kar leta hai
+- Errors run hone se pehle mil jaate hain
+= Fast execution
+dynamic language = variable type decide at runtime like javascript
+✔ Flexible
+✔ Fast development
+✔ Easy scripting
+
+Large scalable apps → Static
+Quick prototyping / scripting → Dynamic
+
+Single-threaded execution means one task runs at a time in a single execution path
+multi-threaded execution allows multiple tasks to run concurrently using multiple execution paths.
+
+let - define the values whose values are changing
+const = define the values whose values are not changing
+
+selectors - refers to html elements to which css rules apply
+universal selector - this will select elements of every type
+type selector
+class selector
